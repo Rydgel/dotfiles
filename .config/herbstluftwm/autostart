@@ -1,0 +1,104 @@
+#!/bin/bash
+
+hc() {
+    herbstclient "$@"
+}
+
+hc emit_hook reload
+
+# remove all existing keybindings
+hc keyunbind --all
+
+# keybindings
+Mod=Mod1    # Use alt as the main modifier
+
+#herbstclient load ${TAG_NAMES[0]} '(clients max:0)'
+
+# tags
+TAG_NAMES=("一" "二" "三" "四" "五" "六")
+TAG_KEYS=( {1..6} 0 )
+
+hc rename default "${TAG_NAMES[0]}" || true
+for i in ${!TAG_NAMES[@]} ; do
+    hc add "${TAG_NAMES[$i]}"
+    key="${TAG_KEYS[$i]}"
+    if ! [ -z "$key" ] ; then
+        hc keybind "Control-$key" use_index "$i"
+        hc keybind "$Mod-Shift-$key" move_index "$i"
+    fi
+done
+
+hc attr theme.tiling.reset 1
+hc attr theme.floating.reset 1
+hc set frame_border_active_color '#353535'
+hc set frame_border_normal_color '#151515'
+hc set frame_bg_normal_color '#252525'
+hc set frame_bg_active_color '#6c3b41'
+hc set frame_border_width 1
+hc set always_show_frame 0
+hc set frame_bg_transparent 1
+hc set frame_transparent_width 0
+hc set frame_gap 0
+
+hc attr theme.active.color '#353535'
+hc attr theme.normal.color '#252525'
+hc attr theme.urgent.color orange
+hc attr theme.inner_width 1
+hc attr theme.inner_color '#202020'
+hc attr theme.border_width 2
+hc attr theme.floating.border_width 4
+hc attr theme.floating.outer_width 1
+hc attr theme.floating.outer_color black
+hc attr theme.active.inner_color '#383838'
+hc attr theme.active.outer_color '#282828'
+hc attr theme.background_color '#ffffff'
+
+# mouse bindings    
+hc mousebind $Mod-Button1 move
+hc mousebind $Mod-Button2 zoom
+hc mousebind $Mod-Button3 resize
+
+# layouts
+hc load 一 '
+(split horizontal:0.500000:0 
+      (clients vertical:0 0x1800005)
+      (clients vertical:0))'
+     
+hc load 二 '
+(split horizontal:0.500000:1
+   (split vertical:0.500000:1
+      (clients vertical:0) 
+      (clients vertical:0)) 
+   (split vertical:0.500000:0
+      (clients vertical:0 0x1a00003)
+      (clients vertical:0)))'
+
+# rules
+hc unrule -F
+
+# focus new clients
+hc rule focus=on
+
+# rules for clients
+hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on
+hc rule windowtype='_NET_WM_WINDOW_TYPE_DIALOG' focus=on
+hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK)' manage=off
+
+hc rule class=Dwb tag=term focus=on
+hc rule class=qutebrowser tag=term focus=on
+hc rule class=Chromium tag=term focus=on
+hc rule class=mpv tag=term focus=on
+hc rule class=sxiv tag=term focus=on
+hc rule class=wine tag=term focus=on
+
+# unlock, just to be sure
+hc unlock
+
+herbstclient set tree_style '╾│ ├└╼─┐'
+
+# do multi monitor setup here, e.g.:
+# hc set_monitors 1280x1024+0+0 1920x1080+1280+0
+# hc detect_monitors
+
+# panel
+panel.sh &

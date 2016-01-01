@@ -1,0 +1,65 @@
+! Rydgel Xresources
+
+! XFt settings
+Xft.antialias:  1
+Xft.autohint:   0
+Xft.dpi:        96
+Xft.hinting:    1
+Xft.hintstyle:  hintfull
+Xft.lcdfilter:  lcddefault
+Xft.rgba:       rgb
+
+! Set the font
+URxvt*font: xft:terminus:pixelsize=13:antialias=false
+URxvt*boldFont: xft:terminus:pixelsize=13:antialias=false
+
+! Increase line spacing
+URxvt*lineSpace: 2
+
+! Terminal window size
+URxvt*geometry: 65x17
+
+! Disable scrollbar
+URxvt.scrollBar: false
+
+! Set urxvt as login shell
+URxvt*loginShell: true
+
+! Set terminal padding
+URxvt.internalBorder: 15
+
+! Enables copy/paste with Ctrl-Shift-C/V
+URxvt.iso14755: false
+URxvt.iso14755_52: false
+URxvt.perl-ext-common: default,clipboard
+URxvt.keysym.Shift-Control-C: perl:clipboard:copy
+URxvt.keysym.Shift-Control-V: perl:clipboard:paste
+
+! Size of cursor
+Xcursor.size: 16
+
+! Colors {{{
+
+! special
+*.foreground:   #7B8695
+*.background:   #202225
+*.cursorColor:  #7B8695
+
+*.color0: #404040
+*.color1: #785561
+*.color2: #58614f
+*.color3: #7e735a
+*.color4: #424a64
+*.color5: #4d3e4c
+*.color6: #3c5a5d
+*.color7: #7b8695
+*.color8: #464646
+*.color9: #8a6270
+*.color10: #6d7762
+*.color11: #8d8063
+*.color12: #626c94
+*.color13: #665064
+*.color14: #548084
+*.color15: #94a1B3
+
+! }}}

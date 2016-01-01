@@ -1,0 +1,79 @@
+# sxhkd configuration
+# herbstluftwm
+
+# reload sxhkd config
+alt + shift + s
+    pkill -USR1 -x sxhkd
+
+# turn off monitors
+XF86PowerOff
+    display.sh off
+
+# menu
+alt + p
+    dmenu_run
+
+alt + comma
+    dmenufm
+
+# mpd toggle
+control + section
+    mpc toggle
+
+# web, fm, img
+alt + {1,2,3}
+    {qutebrowser,spacefm,gimp}
+
+alt + {odiaeresis,adiaeresis}
+    {xcmenuctrl,lolimpdnu}
+
+# terminal
+alt + shift + Return
+    urxvt
+
+# close windows
+alt + shift + c
+    herbstclient close
+
+# kill panel properly and quit
+alt + shift + q
+    herbstclient close; pkill bar; pkill panel
+
+# handle panels and reloading properly
+alt + shift + r
+    herbstclient reload; pkill bar; pkill panel; /home/shn/.config/herbstluftwm/panel.sh &
+
+# window splitting
+alt + {z,a,e}
+    herbstclient split {bottom 0.5,right 0.5, explode}
+
+# focus
+
+alt + period
+    herbstclient cycle_monitor
+
+alt + {Tab,shift+Tab,c,u}
+    herbstclient {cycle_all +1,cycle_all -1,cycle,jumpto urgent}
+
+alt + {Left,Down,Up,Right}
+    herbstclient {focus left,focus down,focus up,focus right}
+
+# layouting
+alt + {r,shift+Tab,shift+f,shift+m,shift+p}
+    herbstclient {remove,cycle_layout 1,floating toggle, fullscreen toggle, pseudotile toggle}
+
+# moving clients
+alt + shift + {Left,Down,Up,Right}
+    herbstclient shift {left,down,up,right}
+
+# cycle through tags
+alt + control + {Left,Right}
+    herbstclient use_index {-1 --skip-visible,+1 --skip-visible}
+
+# shift client to specified monitor
+alt + {apostrophe,section}
+    herbstclient shift_to_monitor {1,0}
+
+# swap client to master or stack
+alt + m
+    herbstclient spawn swap.sh auto

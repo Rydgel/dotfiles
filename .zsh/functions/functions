@@ -1,0 +1,133 @@
+#!/bin/bash
+# shell functions
+#
+
+
+# colorized man pages 
+man() {
+   env \
+      LESS_TERMCAP_mb=$(printf "\e[1;31m") \
+      LESS_TERMCAP_md=$(printf "\e[1;31m") \
+      LESS_TERMCAP_me=$(printf "\e[0m") \
+      LESS_TERMCAP_se=$(printf "\e[0m") \
+      LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
+      LESS_TERMCAP_ue=$(printf "\e[0m") \
+      LESS_TERMCAP_us=$(printf "\e[1;32m") \
+      man "$@"
+}
+
+# automatically do an ls after each cd
+    cd() {
+      if [ -n "$1" ]; then
+        builtin cd "$@" && ls --group-directories-first --color=auto
+      else
+        builtin cd ~ && ls --group-directories-first --color=auto
+      fi
+    }
+
+# extract function
+ext () {
+    if [ -f $1 ] ; then
+        case $1 in
+            *.tar.bz2)        tar xjf $1        ;;
+            *.tar.gz)         tar xzf $1        ;;
+            *.bz2)            bunzip2 $1        ;;
+            *.rar)            unrar x $1        ;;
+            *.gz)             gunzip $1         ;;
+            *.tar)            tar xf $1         ;;
+            *.tbz2)           tar xjf $1        ;;
+            *.tgz)            tar xzf $1        ;;
+            *.zip)            unzip $1          ;;
+            *.7z)             7z x $1           ;;
+            *.Z)              uncompress $1     ;;
+            *)                echo "'$1' cannot be extracted via extract()" ;;
+        esac
+    else
+        echo "'$1' is not a valid file"
+    fi
+}
+
+# colored find
+# NOTE: searches current tree recrusively.
+f() {
+   find . -iregex ".*$@.*" -printf '%P\0' | xargs -r0 ls --color=auto -1d
+}
+
+# copy && follow 
+cpf() {
+   cp "$@" && goto "$_";
+}
+
+# cove && follow
+mvf() {
+   mv "$@" && goto "$_";
+}
+
+# mkdir && follow
+mkcdr() {
+   mkdir -vp "$@" && cd "$_";
+}
+
+# create tar archive
+mktar() {
+   tar cvf  "${1%%/}.tar" "${1%%/}/";
+}
+
+# create tar.gz archive
+mktgz() {
+   tar cvzf "${1%%/}.tar.gz"  "${1%%/}/";
+}
+
+# create tar.bz2 archive
+mktbz() {
+   tar cvjf "${1%%/}.tar.bz2" "${1%%/}/";
+}
+
+# print mkv information
+mkv() {
+   [[ -n "$@" ]] || {
+      echo "usage : mkv [file]"
+      return
+   }
+   mkvmerge -i "$@"
+}
+
+# remux MKV to use only 1 audio && subtible track
+remux() {
+   [[ -n "$1" ]] && [[ -n "$2" ]] && [[ -n "$3" ]] && [[ -n "$4" ]] || {
+      echo "usage : remux [output] [input] [audio track to keep] [subtible track to keep]"
+      return
+   }
+   mkvmerge -o "$1" -d 1 --audio-tracks "$3" --subtitle-tracks "$4" "$2"
+}
+
+# same as above expect you can batch whole directory with this
+bremux() {
+   local FILTER="*.mkv"
+   [[ -n "$1" ]] && [[ -n "$2" ]] || {
+      echo "usage : bremux [audio track] [subtible track] [filter]"
+      return
+   }
+   [[ -n "$3" ]] && FILTER="$3"
+   for i in $FILTER; do
+      remux "[REMUX]$i" "$i" "$1" "$2"
+   done
+}
+
+# japanese text to speech
+say() {
+   local URL="$(echo "$@" | perl -MURI::Escape -ne 'chomp;print uri_escape($_)')"
+   mpv -really-quiet "http://translate.google.com/translate_tts?ie=UTF-8&tl=JA&q=$URL" &> /dev/null
+}
+
+saydl() {
+   local URL="$(echo "$@" | perl -MURI::Escape -ne 'chomp;print uri_escape($_)')"
+   wget --user-agent="Mozilla/5.0" "http://translate.google.com/translate_tts?ie=UTF-8&tl=JA&q=$URL" -O "$@.mp3"
+}
+
+
+# google translate EN-FI
+trans() {
+   local URL="$(echo "$@" | perl -MURI::Escape -ne 'chomp;print uri_escape($_)')"
+   curl -s -A "Mozilla" "http://translate.google.com/translate_a/t?client=t&ie=UTF-8&text=$URL&sl=en&tl=fi" | awk -F'"' '{print $2}'
+}

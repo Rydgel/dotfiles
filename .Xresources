@@ -40,26 +40,29 @@ Xcursor.size: 16
 
 ! Colors {{{
 
-! special
-*.foreground:   #7B8695
-*.background:   #202225
-*.cursorColor:  #7B8695
+*background: #1D2426
+*foreground: #8FA388
 
-*.color0: #404040
-*.color1: #785561
-*.color2: #58614f
-*.color3: #7e735a
-*.color4: #424a64
-*.color5: #4d3e4c
-*.color6: #3c5a5d
-*.color7: #7b8695
-*.color8: #464646
-*.color9: #8a6270
-*.color10: #6d7762
-*.color11: #8d8063
-*.color12: #626c94
-*.color13: #665064
-*.color14: #548084
-*.color15: #94a1B3
+! Alternate foreground
+!*foreground: #AB9C71
+
+*cursorColor: #BE5E1E
+
+*color0:  #39474A
+*color1:  #986345
+*color2:  #788249
+*color3:  #9B6A46
+*color4:  #3E5951
+*color5:  #B9924A
+*color6:  #5d796a
+*color7:  #977D5E
+*color8:  #4C5F63
+*color9:  #B07350
+*color10: #869151
+*color11: #AF6B42
+*color12: #567A6E
+*color13: #D69D55
+*color14: #668574
+*color15: #AB9C71
 
 ! }}}

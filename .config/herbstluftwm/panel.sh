@@ -9,13 +9,13 @@
 monitor=${1:-0}
 
 # padding
-herbstclient pad $monitor 16
+herbstclient pad $monitor 32
 
 # settings
 #RES="x16+1280x"
-RES="x16"
+RES="x32"
 FONT="*-siji-medium-r-*-*-10-*-*-*-*-*-*-*"
-FONT2="-*-cure.se-medium-r-*-*-11-*-*-*-*-*-*-*"
+FONT2="-*-cure.se-medium-r-*-*-21-*-*-*-*-*-*-*"
 FONT3="IPAGothic-8"
 BG="#1D2426"
 FG="#8FA388"

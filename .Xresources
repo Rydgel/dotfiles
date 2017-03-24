@@ -3,16 +3,16 @@
 ! XFt settings
 Xft.antialias:  1
 Xft.autohint:   0
-Xft.dpi:        96
+Xft.dpi:        200
 Xft.hinting:    1
 Xft.hintstyle:  hintfull
 Xft.lcdfilter:  lcddefault
 Xft.rgba:       rgb
 
 ! Set the font
-URxvt*font: xft:terminus:pixelsize=13:antialias=false
-URxvt*boldFont: xft:terminus:pixelsize=13:antialias=false
-
+URxvt*font: xft:xos4\ terminus:pixelsize=31:antialias=false
+URxvt*boldFont: xft:xos4\ terminus:pixelsize=31:antialias=false
+URxvt.letterSpace: 0
 ! Increase line spacing
 URxvt*lineSpace: 2
 
